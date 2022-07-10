@@ -1,5 +1,5 @@
 // Write your helper functions here!
-//require('isomorphic-fetch');
+require('isomorphic-fetch');
 
 function addDestinationInfo(document, name, diameter, star, distance, moons, imageUrl) {
    const destination = document.getElementById("missionTarget");
@@ -28,9 +28,11 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
     const status = document.getElementById("launchStatus");
     const pilotstatus = document.getElementById("pilotStatus");
     const copilotstatus = document.getElementById("copilotStatus");
+    const fuelStatus = document.getElementById("fuelStatus");
+    const cargoStatus = document.getElementById("cargoStatus");
    
     if (validateInput(pilot) === "Empty" || validateInput(copilot) === "Empty" || validateInput(fuelLevel) === "Empty" || validateInput(cargoLevel) === "Empty" ){
-        alert("Invalid input. All fields are required.")
+        alert("Invalid input. All fields are required.");
     } else if (validateInput(pilot) === "Is a Number" || validateInput(copilot) === "Is a Number"){
         alert("Invalid input. Pilot and Co-pilot names should not be numbers.")
     } else if (validateInput(fuelLevel) === "Not a Number" || validateInput(cargoLevel) === "Not a Number"){
@@ -40,10 +42,16 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
     pilotstatus.innerHTML = `Pilot ${pilot} Ready`;
     copilotstatus.innerHTML = `Co-pilot ${copilot} Ready`;
 
-    if (fuelLevel < 10000 || cargoLevel > 10000){
+    if (fuelLevel < 10000){
         list.style.visibility = 'visible';
         status.style.color = 'red';
         status.innerHTML = 'Shuttle not ready to launch';
+        fuelStatus.innerHTML = 'Not enough fuel for journey!';
+    } else if (cargoLevel > 10000) {
+        list.style.visibility = 'visible';
+        status.style.color = 'red';
+        status.innerHTML = 'Shuttle not ready to launch';
+        cargoStatus.innerHTML = 'Too much cargo mass for journey!';
     } else {
         status.style.color = 'green';
         status.innerHTML = 'Shuttle is ready for launch';
