@@ -37,24 +37,34 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
         alert("Invalid input. Pilot and Co-pilot names should not be numbers.")
     } else if (validateInput(fuelLevel) === "Not a Number" || validateInput(cargoLevel) === "Not a Number"){
         alert("Invalid input. Fuel Level and Cargo Mass must be numbers.")
-    };
-    
-    pilotstatus.innerHTML = `Pilot ${pilot} Ready`;
-    copilotstatus.innerHTML = `Co-pilot ${copilot} Ready`;
+    } else {    
+        pilotstatus.innerHTML = `Pilot ${pilot} Ready`;
+        copilotstatus.innerHTML = `Co-pilot ${copilot} Ready`;
 
-    if (fuelLevel < 10000){
-        list.style.visibility = 'visible';
-        status.style.color = 'red';
-        status.innerHTML = 'Shuttle not ready to launch';
-        fuelStatus.innerHTML = 'Not enough fuel for journey!';
-    } else if (cargoLevel > 10000) {
-        list.style.visibility = 'visible';
-        status.style.color = 'red';
-        status.innerHTML = 'Shuttle not ready to launch';
-        cargoStatus.innerHTML = 'Too much cargo mass for journey!';
-    } else {
-        status.style.color = 'green';
-        status.innerHTML = 'Shuttle is ready for launch';
+        if (fuelLevel < 10000 && cargoLevel > 10000) {
+            list.style.visibility = 'visible';
+            status.style.color = 'red';
+            status.innerHTML = 'Shuttle not ready to launch';
+            fuelStatus.innerHTML = 'Not enough fuel for journey!';
+            cargoStatus.innerHTML = 'Too much cargo mass for journey!';
+        } else if (fuelLevel < 10000 && cargoLevel <= 10000){
+            list.style.visibility = 'visible';
+            status.style.color = 'red';
+            status.innerHTML = 'Shuttle not ready to launch';
+            cargoStatus.innerHTML = 'Cargo mass low enough for launch';
+            fuelStatus.innerHTML = 'Not enough fuel for journey!';
+        } else if (cargoLevel > 10000 && fuelLevel >= 10000) {
+            list.style.visibility = 'visible';
+            status.style.color = 'red';
+            status.innerHTML = 'Shuttle not ready to launch';
+            cargoStatus.innerHTML = 'Too much cargo mass for journey!';
+            fuelStatus.innerHTML = 'Fuel level high enough for launch';
+        } else {
+            status.style.color = 'green';
+            fuelStatus.innerHTML = 'Fuel level high enough for launch';
+            cargoStatus.innerHTML = 'Cargo mass low enough for launch';
+            status.innerHTML = 'Shuttle is ready for launch';
+        }
     }
 }
 

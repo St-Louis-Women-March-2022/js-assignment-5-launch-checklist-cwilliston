@@ -1,26 +1,26 @@
+//const { pickPlanet } = require("./scriptHelper");
 
 window.addEventListener("load", function() {
     let launchForm = document.getElementById("launchForm");
 
-    let listedPlanets;
+    let listedPlanets = [];
     let listedPlanetsResponse = myFetch();
     listedPlanetsResponse.then(function (result) {
         listedPlanets = result;
         console.log(listedPlanets);
     }).then(function () {
         console.log(listedPlanets);
-    });
+        let planet = pickPlanet(listedPlanets);
+        let name = planet.name;
+        let diameter = planet.diameter;
+        let star = planet.star;
+        let distance = planet.distance;
+        let moons = planet.moons;
+        let imageUrl = planet.image;
 
-    let planet = pickPlanet(listedPlanets);
-    console.log(planet);
-    let name = planet.name;
-    let diameter = planet.diameter;
-    let star = planet.star;
-    let distance = planet.distance;
-    let moons = planet.moons;
-    let imageUrl = planet.image;
+        addDestinationInfo(document, name, diameter, star, distance, moons, imageUrl);
+     });
 
-    addDestinationInfo(document, name, diameter, star, distance, moons, imageUrl);
     
     launchForm.addEventListener("submit", function() {
         let list = document.getElementById("faultyItems");
